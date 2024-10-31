@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
@@ -11,10 +12,14 @@ class Main {
             serverSocket = new ServerSocket(port);
             serverSocket.setReuseAddress(true);
 //            clientSocket = serverSocket.accept();
-            String redisCommand = args[0].toUpperCase();
-            if (redisCommand.equals("PING")) {
-                System.out.println("PONG");
+            Scanner scanner = new Scanner(System.in);
+            while (scanner.hasNextLine()) {
+                String redisCommand = scanner.nextLine();
+                if (redisCommand.equals("PING")) {
+                    System.out.println("PONG");
+                }
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
