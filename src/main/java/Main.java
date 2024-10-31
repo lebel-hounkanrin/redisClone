@@ -7,18 +7,14 @@ class Main {
     public static void main(String[] args) {
         ServerSocket serverSocket = null;
         Socket clientSocket = null;
-        int port = 6377;
+        int port = 6379;
         try {
             serverSocket = new ServerSocket(port);
             serverSocket.setReuseAddress(true);
-//            clientSocket = serverSocket.accept();
-            Scanner scanner = new Scanner(System.in);
-            while (scanner.hasNextLine()) {
-                String redisCommand = scanner.nextLine();
-                if (redisCommand.equals("PING")) {
-                    System.out.println("PONG");
-                }
-            }
+            clientSocket = serverSocket.accept();
+
+            clientSocket.getOutputStream().write("+PONG\r\n".getBytes());
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
