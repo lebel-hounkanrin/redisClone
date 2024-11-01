@@ -1,4 +1,6 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -11,10 +13,12 @@ class Main {
         try {
             serverSocket = new ServerSocket(port);
             serverSocket.setReuseAddress(true);
-            clientSocket = serverSocket.accept();
-
-            clientSocket.getOutputStream().write("+PONG\r\n".getBytes());
-
+            while (true){
+                clientSocket = serverSocket.accept();
+                BufferedReader command = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                System.out.println(command.readLine());
+                clientSocket.getOutputStream().write("+PONG\r\n".getBytes());
+            }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
